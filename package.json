@@ -1,0 +1,46 @@
+{
+    "name": "longmemory",
+    "version": "2.0.0",
+    "description": "LongMemory: memory engine for Node.js + SQLite. LLM-driven fact extraction, semantic dedup, multi-signal recall with rerank. Ships with built-in MCP server for AI agent integration.",
+    "license": "Apache-2.0",
+    "keywords": [
+        "ai",
+        "agents",
+        "memory",
+        "sqlite",
+        "llm",
+        "mcp",
+        "model-context-protocol",
+        "semantic-search",
+        "rerank"
+    ],
+    "engines": {
+        "node": ">=20"
+    },
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "bin": {
+        "longmemory-mcp": "node --env-file=.env dist/mcp/cli.js",
+        "longmemory-mcp-stdio": "node --env-file=.env dist/mcp/cli-stdio.js"
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.json && node -e \"require('fs').mkdirSync('dist/core/engine',{recursive:true});require('fs').copyFileSync('src/core/engine/schema.sql','dist/core/engine/schema.sql')\"",
+        "start": "node --env-file=.env dist/mcp/cli.js",
+        "typecheck": "tsc --noEmit -p tsconfig.json"
+    },
+    "devDependencies": {
+        "@types/better-sqlite3": "^7.6.13",
+        "@types/node": "^20.19.25",
+        "tsx": "^4.23.15",
+        "typescript": "^5.9.3"
+    },
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.29.0",
+        "better-sqlite3": "^12.11.1",
+        "zod": "^3.23.8"
+    }
+}
